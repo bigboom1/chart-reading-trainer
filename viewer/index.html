@@ -270,13 +270,14 @@
   function loadPage() {
     imgEl.src = imgSrc(currentVersion, currentPage);
     currentReveal = 0;
+    maskEl.style.display = 'block';
     updateReveal();
     updateNavButtons();
-    pageInd.textContent = `${currentPage} / ${CONFIG[currentVersion.replace('.', '_')]}`;
+    pageInd.textContent = `${currentPage} / ${CONFIG[currentVersion.replace(/\./g, '_')]}`;
   }
 
   function updateNavButtons() {
-    const total = CONFIG[currentVersion.replace('.', '_')];
+    const total = CONFIG[currentVersion.replace(/\./g, '_')];
     prevBtn.disabled = currentPage <= 1;
     nextBtn.disabled = currentPage >= total;
   }
@@ -312,7 +313,7 @@
   // ---------- 事件 ----------
   verSelect.addEventListener('change', () => {
     currentVersion = verSelect.value;
-    const total = CONFIG[currentVersion.replace('.', '_')];
+    const total = CONFIG[currentVersion.replace(/\./g, '_')];
     if (currentPage > total) currentPage = total;
     loadPage();
   });
@@ -322,7 +323,7 @@
   });
 
   stepInput.addEventListener('change', () => {
-    step = parseInt(stepInput.step) || 1;
+    step = parseInt(stepInput.value) || 1;
   });
 
   revealBtn.addEventListener('click', () => { doReveal(); showHint(); });
@@ -333,7 +334,7 @@
   });
 
   nextBtn.addEventListener('click', () => {
-    const total = CONFIG[currentVersion.replace('.', '_')];
+    const total = CONFIG[currentVersion.replace(/\./g, '_')];
     if (currentPage < total) { currentPage++; loadPage(); }
   });
 
@@ -367,8 +368,9 @@
         showHint();
         break;
       case 'ArrowUp':
-        if (currentPage < CONFIG[currentVersion.replace('.', '_')]) {
-          currentPage++; loadPage();
+        {
+          const total = CONFIG[currentVersion.replace(/\./g, '_')];
+          if (currentPage < total) { currentPage++; loadPage(); }
         }
         break;
       case 'ArrowDown':
