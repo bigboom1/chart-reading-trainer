@@ -397,12 +397,12 @@
     currentReveal = 0;
     updateReveal();
     updateNavButtons();
-    pageInd.textContent = `${currentPage} / ${CONFIG[currentVersion.replace(/\./g, '_')]}`;
+    pageInd.textContent = `${currentPage} / ${CONFIG[currentVersion.replace(/\./g, '_').replace(/-/g, '_')]}`;
     loadNote();
   }
 
   function updateNavButtons() {
-    const total = CONFIG[currentVersion.replace(/\./g, '_')];
+    const total = CONFIG[currentVersion.replace(/\./g, '_').replace(/-/g, '_')];
     prevBtn.disabled = currentPage <= 1;
     nextBtn.disabled = currentPage >= total;
   }
@@ -449,7 +449,7 @@
   // ---------- 事件 ----------
   verSelect.addEventListener('change', () => {
     currentVersion = verSelect.value;
-    const total = CONFIG[currentVersion.replace(/\./g, '_')];
+    const total = CONFIG[currentVersion.replace(/\./g, '_').replace(/-/g, '_')];
     if (currentPage > total) currentPage = total;
     loadPage();
   });
@@ -486,7 +486,7 @@
   });
 
   nextBtn.addEventListener('click', () => {
-    const total = CONFIG[currentVersion.replace(/\./g, '_')];
+    const total = CONFIG[currentVersion.replace(/\./g, '_').replace(/-/g, '_')];
     if (currentPage < total) { currentPage++; loadPage(); }
   });
 
@@ -498,7 +498,7 @@
   // 跳转
   gotoBtn.addEventListener('click', () => {
     const targetPage = parseInt(gotoInput.value);
-    const total = CONFIG[currentVersion.replace(/\./g, '_')];
+    const total = CONFIG[currentVersion.replace(/\./g, '_').replace(/-/g, '_')];
     if (targetPage && targetPage >= 1 && targetPage <= total) {
       currentPage = targetPage;
       loadPage();
@@ -534,7 +534,7 @@
         break;
       case 'ArrowUp':
         {
-          const total = CONFIG[currentVersion.replace(/\./g, '_')];
+          const total = CONFIG[currentVersion.replace(/\./g, '_').replace(/-/g, '_')];
           if (currentPage < total) { currentPage++; loadPage(); }
         }
         break;
